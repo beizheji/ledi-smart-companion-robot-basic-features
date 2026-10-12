@@ -134,5 +134,6 @@ python tools/selfcheck.py --inv <path>/route_inventory.json
 - 所有逆向结论来自自有设备的原厂 APK 字节码解析与真机验证。
 - 原厂安装包与去引导改包放在配套存档仓库
   [`ledi-apk-archive`](https://github.com/beizheji/ledi-apk-archive)（二进制走 Release）。
-  那里只做保存与不修改的转发，**权利归原权利人**，用途与下架声明见该仓库的 `NOTICE.md`。
+  那里只做保存与不修改的转发，**权利归原权利人**，用途与下架声明见该仓库的
+  [NOTICE.md](https://github.com/beizheji/ledi-apk-archive/blob/main/NOTICE.md)。
 - 关机 / 重启 / 关闭 ADB / 冻结进程等操作会直接影响设备可用性，执行前需确认存在回退通道。

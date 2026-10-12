@@ -83,8 +83,19 @@ def scan_text(text, root):
         for m in re.finditer(pat, text):
             out.append((why, m.group(0), text[max(0, m.start() - 50):m.start() + 50].replace("\n", " | ")))
     # .md 引用：先剥掉紧贴的引号/反引号/括号再判（否则 "http-api.md 这种会把引号算进文件名）
+    DELIM = set(" \t\r\n，。；：（）()[]`|\"'“”‘’<>【】")
     for m in re.finditer(r"""[^\s，。；（）()\[\]`|"'“”‘’]{2,60}\.md""", text):
         ref = m.group(0)
+        # 若整词是 URL（如 https://…/NOTICE.md），公开读者点得开 ⇒ 不算「指向仓库外的文档」。
+        # ★ 这条是修一个误报：跨仓库引用另一个仓库的文档时，写完整链接是正确做法，不该被拦。
+        j = m.start()
+        while j > 0 and text[j - 1] not in DELIM:
+            j -= 1
+        if "://" in text[j:m.end()]:
+            continue
+        # 或者是 markdown 链接的标签：`[NOTICE.md](https://…)` —— 目标是 URL，同样点得开。
+        if re.match(r"\]\(", text[m.end():m.end() + 3]) and "://" in text[m.end():m.end() + 200]:
+            continue
         cands = (os.path.join(root, ref), os.path.join(root, "docs", os.path.basename(ref)))
         if not any(os.path.exists(c) for c in cands):
             out.append(("指向仓库外的文档", ref,
