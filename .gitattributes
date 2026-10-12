@@ -1,0 +1,16 @@
+# 行尾纪律：生成物要求可复现（同一份源码跑出的 md/csv/json 字节一致），所以钉死行尾，
+# 避免 CRLF/LF 切换影响字节一致性。
+# 背景：Windows 上 Python open(..., "w") 会把 \n 写成 \r\n，文件会多出「行数」个字节。
+
+* text=auto
+
+# 人写 / 生成的文本：一律 LF
+*.md    text eol=lf
+*.json  text eol=lf
+*.py    text eol=lf
+*.gitignore text eol=lf
+*.gitattributes text eol=lf
+*.editorconfig text eol=lf
+
+# CSV 是机器读的生成物（csv 模块按 RFC 4180 输出 CRLF）—— 不做转换，保住字节稳定
+*.csv   -text

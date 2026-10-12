@@ -1,0 +1,18 @@
+# 生成物 / 临时
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# 本机路径注入（作者本地用，绝不提交）——见 tools/localpaths.py
+.local/
+
+# 编辑器
+.vscode/
+.idea/
+*.swp
+
+# 系统
+Thumbs.db
+Desktop.ini
+.DS_Store

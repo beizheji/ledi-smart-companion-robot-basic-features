@@ -1,0 +1,27 @@
+# 编辑器默认行为，与 .gitattributes 一起守住两条纪律：行尾、编码。
+# 生成物要求「同一份源码跑出的 md/csv/json 字节一致」，所以行尾不能由编辑器随手决定。
+
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+[*.md]
+# Markdown 里行尾两个空格 = 硬换行，删了会改变渲染结果
+trim_trailing_whitespace = false
+
+[*.py]
+indent_style = space
+indent_size = 4
+
+[*.{json,yml,yaml}]
+indent_style = space
+indent_size = 2
+
+[*.csv]
+# 生成物按 RFC 4180 输出 CRLF（csv 模块的默认行为），不做转换，保住字节稳定
+end_of_line = crlf
+trim_trailing_whitespace = false
